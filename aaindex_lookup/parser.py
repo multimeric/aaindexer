@@ -2,17 +2,25 @@ from pyparsing import *
 from pyparsing import common
 from string import ascii_uppercase
 from itertools import chain
+from aaindex_lookup.models import AaindexRecord
 
 
 def visit_general_field(s, loc, toks):
-    return toks[0], " ".join(toks[1:])
+    key, *value = toks
+    value = " ".join(value)
+
+    # If the field was empty, just set it to None
+    if len(value.strip()) == 0:
+        return key, None
+
+    return key, value
 
 
 def visit_corr_field(s, loc, toks):
     if len(toks) == 0:
         return None
     else:
-        return "corr", dict(list(toks))
+        return "correlation", dict(list(toks))
 
 
 def visit_index_field(s, loc, toks):
@@ -23,45 +31,46 @@ def visit_index_field(s, loc, toks):
 
 
 def visit_matrix_field(s, loc, toks):
-    row_names, col_names, *vals = toks
-    row = 0
-    col = 0
-    ret = {}
-    for val in vals:
-        key = row_names[row], col_names[col]
-        ret[key] = val
-        row += 1
-        if row > col:
-            row = 0
-            col += 1
+    row_names, col_names, *rows = toks
 
-    return "matrix", ret
+    return "matrix", {row_name: dict(zip(col_names, row)) for row_name, row in zip(row_names, rows)}
 
 
 def visit_record(s, loc, toks):
-    return dict(list(toks))
+    return AaindexRecord(**dict(list(toks)))
+
+
+FIELD_NAMES = {
+    "H": "accession",
+    "D": "description",
+    "R": "pmid",
+    "A": "authors",
+    "T": "title",
+    "J": "journal",
+    "C": "correlation",
+    "I": "index",
+    "M": "matrix",
+    "*": "comment"
+}
 
 
 def visit_general_field_name(s, loc, toks):
-    return {
-        "H": "accession",
-        "D": "description",
-        "R": "pmid",
-        "A": "authors",
-        "T": "title",
-        "J": "journal",
-        "C": "correlation",
-        "I": "index",
-        "M": "matrix",
-    }[toks[0]]
+    return FIELD_NAMES[toks[0]]
 
 
 def grouper(s, loc, toks):
     return [list(toks)]
 
 
+def visit_na(s, loc, toks):
+    return [None]
+
+
+#: Always returns a float
+numeric = common.number | (Literal("NA") | Literal("-")).add_parse_action(visit_na)
+
 general_field_name = (
-    Char(set(ascii_uppercase) - {"I", "C", "M"})
+    Char(set(FIELD_NAMES.keys()) - {"I", "C", "M"})
         .set_name("general_field_name")
         .add_parse_action(visit_general_field_name)
 )
@@ -94,9 +103,8 @@ index_field = (
             + White().suppress()
             + delimited_list(aa_name, delim=White()).add_parse_action(grouper)
             + White().suppress()
-            + delimited_list(
-        common.real, delim=White(), allow_trailing_delim=False
-    ).add_parse_action(grouper)
+            + delimited_list(numeric, delim=White(), allow_trailing_delim=False
+                             ).add_parse_action(grouper)
             + LineEnd().suppress()
     )
         .set_name("index_field")
@@ -111,29 +119,35 @@ corr_entry = (
 corr_field = (
     (
             Literal("C").suppress()
-            + (
-                    (
-                            header_sep
-                            + delimited_list(corr_entry, delim=White())
-                    )
-                    ^ White(" ").suppress()
-            )
+            + Optional(
+        (
+                header_sep
+                + delimited_list(corr_entry, delim=White())
+        )
+        ^ White(" ").suppress()
+    )
             + LineEnd().suppress()
     )
         .set_name("corr_field")
         .add_parse_action(visit_corr_field)
 )
+matrix_names = Word(ascii_uppercase + "-")
 matrix_field = (
     (
             Literal("M").suppress()
             + header_sep
             + Literal("rows = ").suppress()
-            + Word(ascii_uppercase).set_name("matrix_row_labels")
-            + Literal(", cols = ").suppress()
-            + Word(ascii_uppercase).set_name("matrix_column_labels")
+            + matrix_names.copy().set_name("matrix_row_labels")
+            + Literal(", ").suppress()
+            + Literal("cols = ").suppress()
+            + matrix_names.copy().set_name("matrix_column_labels")
             + LineEnd().suppress()
-            + White().suppress()
-            + delimited_list(common.real, White(), allow_trailing_delim=True)
+            + delimited_list(
+        White().suppress() + delimited_list(numeric, White(" "),
+                                            allow_trailing_delim=True).add_parse_action(grouper),
+        delim="\n",
+        allow_trailing_delim=True
+    )
     )
         .set_name("matrix_field")
         .add_parse_action(visit_matrix_field)
@@ -141,11 +155,14 @@ matrix_field = (
 aaindex_field = (index_field ^ corr_field ^ matrix_field ^ general_field).set_name(
     "aaindex_record"
 )
+
 aaindex_record = (
     (aaindex_field[1, ...] + record_footer)
         .set_name("aaindex_record")
         .add_parse_action(visit_record)
-)
+).leave_whitespace(recursive=True)
+
 aaindex_file = (
-    aaindex_record[1, ...].set_name("aaindex_file").leave_whitespace(recursive=True).add_parse_action(lambda s, loc, toks: list(toks))
+    aaindex_record[1, ...].set_name("aaindex_file").leave_whitespace().add_parse_action(
+        lambda s, loc, toks: list(toks))
 )
