@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "aaindex_lookup"
+name = "aaindexer"
 version = "0.1.0"
 description = ""
 authors = ["Michael Milton <michael.r.milton@gmail.com>"]
@@ -14,10 +14,14 @@ rich = "^12.4.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+Sphinx = "^4.5.0"
+sphinx-markdown-builder = "^0.5.5"
+sphinxcontrib-restbuilder = "^0.3"
+sphinx-click = "^4.0.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-aaindex = 'aaindex_lookup.cli:main'
+aaindexer = 'aaindexer.cli:main'

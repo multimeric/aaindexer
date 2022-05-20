@@ -1,8 +1,11 @@
+"""
+Pyparsing grammar and elements
+"""
 from pyparsing import *
 from pyparsing import common
 from string import ascii_uppercase
 from itertools import chain
-from aaindex_lookup.models import AaindexRecord
+from aaindexer.models import AaindexRecord
 
 
 def visit_general_field(s, loc, toks):

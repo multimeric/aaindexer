@@ -1,28 +1,28 @@
-import math
 from textwrap import dedent
 
+from click.testing import CliRunner
 from pyparsing import ParserElement
 
-from aaindex_lookup.models import AaindexRecord
-from aaindex_lookup.parser import aaindex_record
-from aaindex_lookup.scrape import scrape_parse
-from aaindex_lookup.cli import main
-
-from click.testing import CliRunner
+from aaindexer.cli import main
+from aaindexer.models import AaindexRecord
+from aaindexer.parser import aaindex_record
+from aaindexer.scrape import scrape_parse
 
 
 def debug(token: ParserElement):
+    """
+    Recursively puts a token and all its children into debug mode
+    """
     for subtoken in token.recurse():
         subtoken.set_debug()
         debug(subtoken)
     return token
 
 
-def prepare_record(record: str) -> str:
-    return dedent(record).lstrip()
-
-
 def assess_record(record: str) -> AaindexRecord:
+    """
+    Given a record, preprocesses it and parses it
+    """
     record = dedent(record).lstrip()
     debug(aaindex_record)
     return aaindex_record.parse_string(record)[0]
@@ -270,6 +270,7 @@ def test_aaindex_3():
     db = scrape_parse(3)
     assert isinstance(db, list)
     assert len(db) == 47
+
 
 def test_cli():
     runner = CliRunner()
