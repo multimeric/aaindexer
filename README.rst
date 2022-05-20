@@ -2,10 +2,8 @@
 aaindexer
 *********
 
-Foo
-
-A Python package for accessing and parsing the
-[AAindex](https://www.genome.jp/aaindex/), a collection of amino acid
+A Python package for accessing and parsing the *AAindex
+<https://www.genome.jp/aaindex/>*, a collection of amino acid
 properties and substitution matricies. You might want this package so
 that you can characterise certain amino acid residues, for example to
 compare the change in chemical properties caused by a missense
@@ -39,20 +37,29 @@ Or, if you’re a super cool *poetry <https://python-poetry.org/>* user:
 CLI
 ***
 
-::
-   Usage: aaindexer [OPTIONS] DATABASE_NUMBER
 
-      Scrapes a single aaindex database, and prints the result to
-      stdout. A progress bar is shown via stderr.
+aaindexer
+=========
 
-   Options:
-      –pretty / –no-pretty  If pretty (the default), pretty print the
-      JSON, with
-         newlines and indentation.
+Scrapes a single aaindex database, and prints the result to stdout. A
+progress bar is shown via stderr.
 
-      --help
+.. code:: shell
 
-      Show this message and exit.
+   aaindexer [OPTIONS] DATABASE_NUMBER
+
+-[ Options ]-
+
+``--pretty, --no-pretty``
+
+   If pretty (the default), pretty print the JSON, with newlines and
+   indentation.
+
+-[ Arguments ]-
+
+``DATABASE_NUMBER``
+
+   Required argument
 
 
 Python API
@@ -130,7 +137,11 @@ list[`aaindexer.models.AaindexRecord <#aaindexer.AaindexRecord>`_]**
 Development
 ***********
 
-Clone the repo, and then: * *poetry install* to install development
-dependencies * *poetry run pytest test.py* to run tests * *poetry run
-sphinx-build . _build -b rst* to build the readme, then
-*_build/index.rst README.rst* to replace the old readme
+Clone the repo, and then:
+
+*  ``poetry install`` to install development dependencies
+
+*  ``poetry run pytest test.py`` to run tests
+
+*  ``poetry run sphinx-build . _build -b rst`` to build the readme,
+   then ``_build/index.rst README.rst`` to replace the old readme

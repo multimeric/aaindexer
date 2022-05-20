@@ -1,7 +1,7 @@
 aaindexer
 =========
 
-A Python package for accessing and parsing the [AAindex](https://www.genome.jp/aaindex/), a collection of amino acid properties and substitution matricies.
+A Python package for accessing and parsing the `AAindex <https://www.genome.jp/aaindex/>`, a collection of amino acid properties and substitution matricies.
 You might want this package so that you can characterise certain amino acid residues, for example to compare the change in chemical properties caused by a missense mutation.
 Some notable features this offers are:
 
