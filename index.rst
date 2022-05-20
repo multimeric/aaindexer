@@ -38,7 +38,6 @@ Python API
    :imported-members:
    :members:
    :undoc-members:
-   :show-inheritance:
 
 Development
 ===========
