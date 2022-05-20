@@ -68,38 +68,9 @@ progress bar is shown via stderr.
 Python API
 **********
 
-**class aaindexer.AaindexRecord(*, accession, description, pmid=None,
-authors=None, title=None, journal=None, comment=None,
-correlation=None, index=None, matrix=None)**
+**class aaindexer.AaindexRecord**
 
    A single record from a single aaindex database
-
-   :Parameters:
-      *  **accession** (*str*) –
-
-      *  **description** (*str*) –
-
-      *  **pmid** (*Optional**[**str**]*) –
-
-      *  **authors** (*Optional**[**str**]*) –
-
-      *  **title** (*Optional**[**str**]*) –
-
-      *  **journal** (*Optional**[**str**]*) –
-
-      *  **comment** (*Optional**[**str**]*) –
-
-      *  **correlation** (*Optional**[**dict**[**str**,
-         **Optional**[**float**]**]**]*) –
-
-      *  **index** (*Optional**[**dict**[**str**,
-         **Optional**[**float**]**]**]*) –
-
-      *  **matrix** (*Optional**[**dict**[**str**, **dict**[**str**,
-         **Optional**[**float**]**]**]**]*) –
-
-   :Return type:
-      None
 
    ``accession: str``
 
