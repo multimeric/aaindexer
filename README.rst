@@ -68,15 +68,38 @@ progress bar is shown via stderr.
 Python API
 **********
 
-**class aaindexer.AaindexRecord(*, accession: str, description: str,
-pmid: str = None, authors: str = None, title: str = None, journal: str
-= None, comment: str = None, correlation: dict[str, Optional[float]] =
-None, index: dict[str, Optional[float]] = None, matrix: dict[str,
-dict[str, Optional[float]]] = None)**
-
-   Bases: ``pydantic.main.BaseModel``
+**class aaindexer.AaindexRecord(*, accession, description, pmid=None,
+authors=None, title=None, journal=None, comment=None,
+correlation=None, index=None, matrix=None)**
 
    A single record from a single aaindex database
+
+   :Parameters:
+      *  **accession** (*str*) –
+
+      *  **description** (*str*) –
+
+      *  **pmid** (*Optional**[**str**]*) –
+
+      *  **authors** (*Optional**[**str**]*) –
+
+      *  **title** (*Optional**[**str**]*) –
+
+      *  **journal** (*Optional**[**str**]*) –
+
+      *  **comment** (*Optional**[**str**]*) –
+
+      *  **correlation** (*Optional**[**dict**[**str**,
+         **Optional**[**float**]**]**]*) –
+
+      *  **index** (*Optional**[**dict**[**str**,
+         **Optional**[**float**]**]**]*) –
+
+      *  **matrix** (*Optional**[**dict**[**str**, **dict**[**str**,
+         **Optional**[**float**]**]**]**]*) –
+
+   :Return type:
+      None
 
    ``accession: str``
 
@@ -123,25 +146,32 @@ dict[str, Optional[float]]] = None)**
 
       Title of the source publication
 
-**aaindexer.scrape_database(index: int) -> str**
+**aaindexer.scrape_database(index)**
 
    Scrapes an aaindex database, and returns it as plain text
 
    :Parameters:
-      **index** – The number of the database to return (1-3)
+      **index** (*int*) – The number of the database to return (1-3)
 
    :Returns:
       The aaindex database contents
 
-**aaindexer.scrape_parse(index: int, progress=False) ->
-list[`aaindexer.models.AaindexRecord <#aaindexer.AaindexRecord>`_]**
+   :Return type:
+      str
+
+**aaindexer.scrape_parse(index, progress=False)**
 
    Scrapes an aaindex database and parses the result
 
    :Parameters:
-      *  **index** – The number of the database to return (1-3)
+      *  **index** (*int*) – The number of the database to return
+         (1-3)
 
       *  **progress** – If true, show progress
+
+   :Return type:
+      list[`aaindexer.models.AaindexRecord
+      <#aaindexer.AaindexRecord>`_]
 
 
 Development
