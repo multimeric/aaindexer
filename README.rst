@@ -2,8 +2,8 @@
 aaindexer
 *********
 
-A Python package for accessing and parsing the *AAindex
-<https://www.genome.jp/aaindex/>*, a collection of amino acid
+A Python package for accessing and parsing the `AAindex
+<https://www.genome.jp/aaindex/>`_, a collection of amino acid
 properties and substitution matricies. You might want this package so
 that you can characterise certain amino acid residues, for example to
 compare the change in chemical properties caused by a missense
@@ -26,11 +26,14 @@ Installation
 ************
 
 ::
+
    pip install aaindexer
 
-Or, if you’re a super cool *poetry <https://python-poetry.org/>* user:
+Or, if you’re a super cool `poetry <https://python-poetry.org/>`_
+user:
 
 ::
+
    poetry add aaindexer
 
 
@@ -122,16 +125,23 @@ dict[str, Optional[float]]] = None)**
 
 **aaindexer.scrape_database(index: int) -> str**
 
-   Scrapes an aaindex database, and returns it as plain text :param
-   index: The number of the database to return (1-3) :return: The
-   aaindex database contents
+   Scrapes an aaindex database, and returns it as plain text
+
+   :Parameters:
+      **index** – The number of the database to return (1-3)
+
+   :Returns:
+      The aaindex database contents
 
 **aaindexer.scrape_parse(index: int, progress=False) ->
 list[`aaindexer.models.AaindexRecord <#aaindexer.AaindexRecord>`_]**
 
-   Scrapes an aaindex database and parses the result :param index: The
-   number of the database to return (1-3) :param progress: If true,
-   show progress
+   Scrapes an aaindex database and parses the result
+
+   :Parameters:
+      *  **index** – The number of the database to return (1-3)
+
+      *  **progress** – If true, show progress
 
 
 Development

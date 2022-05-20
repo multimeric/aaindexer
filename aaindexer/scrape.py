@@ -14,6 +14,7 @@ BASE_URL = "https://www.genome.jp/ftp/db/community/aaindex/aaindex"
 def scrape_database(index: int) -> str:
     """
     Scrapes an aaindex database, and returns it as plain text
+
     :param index: The number of the database to return (1-3)
     :return: The aaindex database contents
     """
@@ -23,6 +24,7 @@ def scrape_database(index: int) -> str:
 def scrape_parse(index: int, progress=False) -> list[AaindexRecord]:
     """
     Scrapes an aaindex database and parses the result
+
     :param index: The number of the database to return (1-3)
     :param progress: If true, show progress
     """
