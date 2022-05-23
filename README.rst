@@ -74,11 +74,12 @@ Python API
 
    ``accession: str``
 
-      Record accession, e.g. ANDN920101
+      Record accession, e.g. ``"ANDN920101"``
 
    ``authors: Optional[str]``
 
-      Authors for the source publication, as a single string
+      Authors for the source publication, as a single string, e.g.
+      ``"Andersen, N.H., Cao, B. and Chen, C."``
 
    ``comment: Optional[str]``
 
@@ -86,36 +87,37 @@ Python API
 
    ``correlation: Optional[dict[str, Optional[float]]]``
 
-      A correlation matrix between this record and others in the same
-      database
+      A dictionary of correlations between this record and others in
+      the same database. The dictionary is indexed by the record
+      accession number. e.g. ``{ "ROBB760101": 0.874, "QIAN880106":
+      0.846 }``
 
    ``description: str``
 
-      Record description, as a string
+      Record description, as a string, e.g. ``"alpha-CH chemical
+      shifts (Andersen et al., 1992)"``
 
    ``index: Optional[dict[str, Optional[float]]]``
 
       A dictionary indexed by amino acid 1-letter codes, where the
-      values are amino acid properties described in this record
+      values are amino acid properties described in this record. e.g.
+      *{“A”: 0.68, “R”: -0.22 }`*
 
    ``journal: Optional[str]``
-
-      Journal for the source publication
 
    ``matrix: Optional[dict[str, dict[str, Optional[float]]]]``
 
       A dictionary of dictionaries. The first and second index are
       both amino acid 1-letter codes, defining up a substitution
-      matrix between the two amino acids. Note that if matrix[X][Y] is
-      not defined, then matrix[Y][X] (the reverse) will be
+      matrix between the two amino acids. e.g. ``{ "A": { "A": 3.0 },
+      "R": { "A": -3.0, "R": 6.0 }`` Note that if matrix[X][Y] is not
+      defined, then matrix[Y][X] (the reverse) will be.
 
    ``pmid: Optional[str]``
 
-      PubMed identifier
+      PubMed identifier, e.g. ``"PMID:1575719"``
 
    ``title: Optional[str]``
-
-      Title of the source publication
 
 **aaindexer.scrape_database(index)**
 
