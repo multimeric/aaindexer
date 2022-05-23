@@ -101,16 +101,19 @@ Python API
 
       A dictionary indexed by amino acid 1-letter codes, where the
       values are amino acid properties described in this record. e.g.
-      *{“A”: 0.68, “R”: -0.22 }`*
+      ``{"A": 0.68, "R": -0.22 }``
 
    ``journal: Optional[str]``
+
+      Journal for the source publication, e.g. ``"Biochem. and
+      Biophys. Res. Comm. 184, 1008-1014 (1992)"``
 
    ``matrix: Optional[dict[str, dict[str, Optional[float]]]]``
 
       A dictionary of dictionaries. The first and second index are
       both amino acid 1-letter codes, defining up a substitution
       matrix between the two amino acids. e.g. ``{ "A": { "A": 3.0 },
-      "R": { "A": -3.0, "R": 6.0 }`` Note that if matrix[X][Y] is not
+      "R": { "A": -3.0, "R": 6.0 }``. Note that if matrix[X][Y] is not
       defined, then matrix[Y][X] (the reverse) will be.
 
    ``pmid: Optional[str]``
@@ -118,6 +121,10 @@ Python API
       PubMed identifier, e.g. ``"PMID:1575719"``
 
    ``title: Optional[str]``
+
+      Title of the source publication, e.g. ``"Peptide/protein
+      structure analysis using the chemical shift index method:
+      upfield alpha-CH values reveal dynamic helices and aL sites"``
 
 **aaindexer.scrape_database(index)**
 
