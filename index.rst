@@ -7,9 +7,9 @@ Some notable features this offers are:
 
 * Python API *and* CLI with JSON output
 * Detailed test suite
-* Parsing Expression Grammar for parsing aaindex entries that can be used independently
-* Automatic handling of some idiosyncrasies of the aaindex format
-* aaindex itself is not included, avoiding any breaches of the license
+* Parsing Expression Grammar for parsing AAindex entries that can be used independently
+* Automatic handling of some idiosyncrasies of the AAindex format
+* AAindex itself is not included, avoiding any breaches of the license
 
 Installation
 ============
@@ -38,6 +38,12 @@ Python API
    :imported-members:
    :members:
    :undoc-members:
+
+Citation
+========
+
+Please cite the original AAindex paper if you are using this package or the raw data:
+Kawashima, S. & Kanehisa, M. AAindex: Amino Acid index database. Nucleic Acids Research 28, 374 (2000).
 
 Development
 ===========
